@@ -1,4 +1,8 @@
-# ANTSDR-RevC-Z7020-AD9361
+# ANTSDR Rev.C (Z7020 + AD9361) — Windows SDR Toolkit & Firmware
+
+**Основная платформа пользователя: Windows 10/11 x64.** Плата ANTSDR работает на собственной встроенной системе; Windows используется на ПК для настройки, USB-соединения, libiio и SDRangel. Отдельные материалы охватывают встроенную прошивку и Android.
+
+[Windows: быстрый старт](07-Documentation/QUICKSTART.md) · [SDRangel и libiio](03-Software/WINDOWS-SDRANGEL.md) · [Прошивки и релизы](02-Firmware/RELEASE-POLICY.md)
 
 ## Фото оборудования
 
