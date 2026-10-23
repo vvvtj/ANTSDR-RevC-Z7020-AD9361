@@ -1,0 +1,40 @@
+name: Generate E310 STL and ZIP
+on:
+  push:
+    paths:
+      - 'cad/E310_v30/**'
+      - '.github/workflows/build-e310-stl.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OpenSCAD
+        run: sudo apt-get update && sudo apt-get install -y openscad zip
+      - name: Generate binary STL and ZIP
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd cad/E310_v30
+          openscad -o ANTSDR_E310_RevC_v30.stl E310_RevC_photo_approx_v30.scad
+          python3 - <<'PY'
+          import struct, pathlib
+          p=pathlib.Path("ANTSDR_E310_RevC_v30.stl")
+          b=p.read_bytes()
+          assert len(b)>=84 and (len(b)-84)//50 == struct.unpack_from("<I",b,80)[0], "invalid binary STL"
+          print("STL triangles:",struct.unpack_from("<I",b,80)[0])
+          PY
+          zip -9 ANTSDR_E310_RevC_v30_STL.zip ANTSDR_E310_RevC_v30.stl README.md E310_RevC_photo_approx_v30.scad
+      - name: Commit binary CAD artifacts
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f cad/E310_v30/ANTSDR_E310_RevC_v30.stl cad/E310_v30/ANTSDR_E310_RevC_v30_STL.zip
+          if ! git diff --cached --quiet; then
+            git commit -m "Add generated binary E310 STL and ZIP [skip ci]"
+            git push
+          fi
