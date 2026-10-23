@@ -1,15 +1,13 @@
-# ANTSDR E310 Rev.C — CAD v30
+# E310 Rev.C / AD9361 — CAD v30
+Board photographed: `23-E310B25-20`, MicroPhase ANTSDR E310 Rev.C.
 
-Model for board marked `23-E310B25-20`. All files are for enclosure prototyping, NOT final machining tolerances.
+- `ANTSDR_E310_photo_corrected_v30.step`: detailed **approximate** 3D CAD assembly, original STEP binary.
+- `ANTSDR_E310_photo_corrected_v30.stl`: generated binary STL **from the same detailed STEP**, when workflow completes.
+- `ANTSDR_E310_v30_CAD_bundle.zip`: generated package containing STEP, STL, SCAD and this README, when workflow completes.
+- `export_step_to_stl.py`: exact pipeline using OpenCascade and mesh validation.
+- `build_e310_photo_revision_v30.py`: prior model generator.
+- `E310_RevC_photo_approx_v30.scad`: **separate simplified model**, not the source of the detailed STL.
 
-- `ANTSDR_E310_photo_corrected_v30.step` — native STEP geometry, existing exact blob copied into this folder without text re-encoding.
-- `E310_RevC_photo_approx_v30.scad` — simplified parametric OpenSCAD alternative; different detail level from STEP.
-- `build_e310_photo_revision_v30.py` — Python generator source for detailed model.
+Use [GitHub Actions: Export detailed E310 STEP to binary STL and ZIP](../../../../actions/workflows/build-e310-stl.yml) and choose **Run workflow** if it does not run automatically. The workflow must complete successfully before STL and ZIP appear here.
 
-STL v30 was produced in ChatGPT, but has not been uploaded to GitHub because available integration cannot read its binary bytes as a blob. Original downloadable STL is available from the conversation attachment. To regenerate locally, run the generator or export the STEP in FreeCAD (File > Export > STL).
-
-## Geometry and caveats
-
-PCB approximately 100 × 60 × 1.6 mm. Four SMA, RJ45, two USB Type-C (no micro-USB), microSD on reverse, shield and heatsink. Connector cutout dimensions and mounting hole centres need verification against the physical board before manufacturing. The official mechanical DXF is for E310 ES2, which may differ from this board revision.
-
-Official DXF: https://github.com/MicroPhase/antsdr_doc_en/blob/master/mechanical/ANT_E310_ES2_Mechanical.dxf
+Geometry reference: MicroPhase E310 ES2 DXF, physical photos, PCB 100×60 mm, approximate 1.6 mm thick. Four SMA, RJ45, exactly two USB Type-C, microSD on reverse. The mechanical DXF is for ES2 and may not match this particular Rev.C. Position and fit of connectors and mounting holes **are not certified**: check real device before machining.
